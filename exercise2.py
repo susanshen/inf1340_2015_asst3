@@ -33,6 +33,14 @@ containing the following keys:
 '''
 COUNTRIES = None
 
+with open("test_returning_citizen.json", "r") as entry_record_reader:
+    entry_record_contents = entry_record_reader.read()
+
+
+def entry_record_check():
+    for row in entry_record_contents:
+        if "passport: " 
+
 
 #####################
 # HELPER FUNCTIONS ##
@@ -75,8 +83,10 @@ def valid_passport_format(passport_number):
     :param passport_number: alpha-numeric string
     :return: Boolean; True if the format is valid, False otherwise
     """
-    return False
-
+    valid_passport_regex = re.compile(r'\d\d\d\d\d-\d\d\d\d\d-\d\d\d\d\d-\d\d\d\d\d-\d\d\d\d\d')
+    valid_passport_match = valid_passport_regex.search(entry_record_contents)
+    if valid_passport_match is None:
+        return False
 
 def valid_visa_format(visa_code):
     """
