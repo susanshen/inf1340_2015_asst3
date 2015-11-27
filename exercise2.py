@@ -41,7 +41,7 @@ with open("test_jsons/test_returning_citizen.json", "r") as entry_record_reader:
 
 def entry_record_check():
     for row in entry_record_contents:
-        if "" in
+        if "" in entry_record_contents.value()
 
 
 
