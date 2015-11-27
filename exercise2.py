@@ -36,9 +36,7 @@ COUNTRIES = None
 with open("test_jsons/test_returning_citizen.json", "r") as entry_record_reader:
     entry_record_contents = entry_record_reader.read()
 
-#def entry_record_check():
-#    for row in entry_record_contents:
-#        if "passport: "
+
 
 #####################
 # HELPER FUNCTIONS ##
@@ -77,7 +75,7 @@ def decide(input_file, countries_file):
 
 def valid_passport_format(passport_number):
     """
-    Checks whether a pasport number is five sets of five alpha-number characters separated by dashes
+    Checks whether a passport number is five sets of five alpha-number characters separated by dashes
     :param passport_number: alpha-numeric string
     :return: Boolean; True if the format is valid, False otherwise
     """
