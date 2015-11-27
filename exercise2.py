@@ -33,8 +33,15 @@ containing the following keys:
 '''
 COUNTRIES = None
 
+
+
 with open("test_jsons/test_returning_citizen.json", "r") as entry_record_reader:
     entry_record_contents = entry_record_reader.read()
+
+
+def entry_record_check():
+    for row in entry_record_contents:
+        if "" in
 
 
 
