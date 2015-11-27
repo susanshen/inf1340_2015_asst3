@@ -41,7 +41,6 @@ with open("test_jsons/test_returning_citizen.json", "r") as entry_record_reader:
 #    for row in entry_record_contents:
 #        if "passport: "
 
-
 #####################
 # HELPER FUNCTIONS ##
 #####################
