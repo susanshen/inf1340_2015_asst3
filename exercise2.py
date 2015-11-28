@@ -42,7 +42,6 @@ with open("test_jsons/countries.json", "r") as countries_reader:
     countries_contents = countries_reader.read()
     countries = json.loads(countries_contents)
 
-
 def entry_record_check():
     control_flag = "T"
     for dictionary in test_return:
