@@ -53,7 +53,6 @@ def entry_record_check():
 
 
 
-
 #####################
 # HELPER FUNCTIONS ##
 #####################
