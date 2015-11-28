@@ -37,6 +37,7 @@ with open("test_jsons/test_returning_citizen.json", "r") as entry_record_reader:
     entry_record_contents = entry_record_reader.read()
     test_return = json.loads(entry_record_contents)
 #   print test_return
+
 with open("test_jsons/countries.json", "r") as countries_reader:
     countries_contents = countries_reader.read()
     countries = json.loads(countries_contents)
