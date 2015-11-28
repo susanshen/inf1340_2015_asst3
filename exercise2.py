@@ -37,12 +37,19 @@ with open("test_jsons/test_returning_citizen.json", "r") as entry_record_reader:
     entry_record_contents = entry_record_reader.read()
     test_return = json.loads(entry_record_contents)
 #   print test_return
+with open("test_jsons/countries.json", "r") as countries_reader:
+    countries_contents = countries_reader.read()
+    countries = json.loads(countries_contents)
+
 
 def entry_record_check():
-    for record in test_return:
-        for key in record:
-            print test_return.get('passport', default=None)
-
+    control_flag = "T"
+    for dictionary in test_return:
+        for key in dictionary:
+            if (dictionary.get(key)) == "":
+                control_flag = "F"
+        if control_flag == "F":
+            print(dictionary)
 
 
 
@@ -94,6 +101,8 @@ def valid_passport_format(passport_number):
     valid_passport_match = valid_passport_regex.search(entry_record_contents)
     if valid_passport_match is None:
         return False
+    else:
+        return True
 
 
 def valid_visa_format(visa_code):
@@ -116,3 +125,5 @@ def valid_date_format(date_string):
 
 
 entry_record_check()
+
+#valid_passport_format("JMZ0S-89IA9-OTCLY-MQILJ-P7CTY")
