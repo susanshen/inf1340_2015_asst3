@@ -35,12 +35,23 @@ COUNTRIES = None
 
 with open("test_jsons/test_returning_citizen.json", "r") as entry_record_reader:
     entry_record_contents = entry_record_reader.read()
+    test_return = json.loads(entry_record_contents)
+#   print test_return
+
+def entry_record_check():
+    for record in test_return:
+        for key in record:
+            print test_return.get('passport', default=None)
+
+
 
 
 
 #####################
 # HELPER FUNCTIONS ##
 #####################
+
+
 def is_more_than_x_years_ago(x, date_string):
     """
     Check if date is less than x years ago.
@@ -84,6 +95,7 @@ def valid_passport_format(passport_number):
     if valid_passport_match is None:
         return False
 
+
 def valid_visa_format(visa_code):
     """
     Checks whether a visa code is two groups of five alphanumeric characters
@@ -101,3 +113,6 @@ def valid_date_format(date_string):
     """
 
     return False
+
+
+entry_record_check()
