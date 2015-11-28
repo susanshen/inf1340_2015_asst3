@@ -52,7 +52,6 @@ def entry_record_check():
             print(dictionary)
 
 
-
 #####################
 # HELPER FUNCTIONS ##
 #####################
