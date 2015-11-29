@@ -47,6 +47,7 @@ with open("countries.json", "r") as ministry_list_reader:
     ministry_list_contents = ministry_list_reader.read()
     ministry_list = json.load(ministry_list_contents)
 
+
 def entry_record_check():
     control_flag = "T"
     for dictionary in test_return:
@@ -101,7 +102,7 @@ def valid_passport_format(passport_number):
     :param passport_number: alpha-numeric string
     :return: Boolean; True if the format is valid, False otherwise
     """
-    valid_passport_regex = re.compile(r'\d\d\d\d\d-\d\d\d\d\d-\d\d\d\d\d-\d\d\d\d\d-\d\d\d\d\d')
+    valid_passport_regex = re.compile(r'\w\w\w\w\w-\w\w\w\w\w-\w\w\w\w\w-\w\w\w\w\w-\w\w\w\w\w', re.I)
     valid_passport_match = valid_passport_regex.search(entry_record_contents)
     if valid_passport_match is None:
         return False
@@ -125,6 +126,7 @@ def valid_date_format(date_string):
     :return: Boolean True if the format is valid, False otherwise
     """
     try:
+        date_string = entry_record_contents['birth_date']
         datetime.datetime.strptime(date_string, '%Y-%m-%d')
         return True
     except ValueError:
