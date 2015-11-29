@@ -37,49 +37,56 @@ COUNTRIES = None
 with open("test_jsons/test_returning_citizen.json", "r") as entry_record_reader:
     entry_record_contents = entry_record_reader.read()
     test_return = json.loads(entry_record_contents)
-#   print test_return
 
 with open("test_jsons/countries.json", "r") as countries_reader:
     countries_contents = countries_reader.read()
     countries = json.loads(countries_contents)
 
-
-def entry_record_check():
-    for dictionary in test_return:
+def entry_record_check(input_file):
+    for dictionary in input_file:
         control_flag = "T"
         for key in dictionary:
             value1 = dictionary.get(key)
             if key == "from":
-                for key1 in value1:
-                    value2 = dictionary.get(key1)
-                    pvalue0 = value1.values()
-                    if pvalue0[0] == "":
-                        control_flag = "F"
-                    elif pvalue0[1] == "":
-                        control_flag = "F"
-                    elif pvalue0[2] == "":
+                list2 = value1
+                if (list2['city']) == "":
+                    control_flag = "F"
+                elif (list2['region']) == "":
+                    control_flag = "F"
+                elif (list2['country']) == "":
                         control_flag = "F"
             if key == "home":
-                for key1 in value1:
-                    value2 = dictionary.get(key1)
-                    pvalue0 = value1.values()
-                    if pvalue0[0] == "":
-                        control_flag = "F"
-                    elif pvalue0[1] == "":
-                        control_flag = "F"
-                    elif pvalue0[2] == "":
+                list2 = value1
+                if (list2['city']) == "":
+                    control_flag = "F"
+                elif (list2['region']) == "":
+                    control_flag = "F"
+                elif (list2['country']) == "":
                         control_flag = "F"
         if control_flag == "F":
             print(dictionary)
 
-def location_check():
-    for dictionary in test_return:
-        control_flag = "T"
+def location_check(input_file, countries_file):
+    for dictionary in input_file:
+        #control_flag = "T"
         for key in dictionary:
-            if (dictionary.get(key)) == "":
-                control_flag = "F"
-        if control_flag == "F":
-            print(dictionary)
+            value1 = dictionary.get(key)
+            if key == "from":
+                list1 = value1
+                pvalue1 = (list1['country'])
+
+                for key2 in countries_file:
+                    if key2 == pvalue1:
+                        print (key2)
+
+            if key == "home":
+                list2 = value1
+                pvalue2 = (list2['country'])
+                if pvalue2 != "KAN":
+
+                    for key3 in countries_file:
+                        if key3 == pvalue2:
+                            print (key3)
 
 
 #####################
@@ -115,8 +122,25 @@ def decide(input_file, countries_file):
     :return: List of strings. Possible values of strings are:
         "Accept", "Reject", and "Quarantine"
     """
+    for dictionary in input_file:
+        control_flag = "F"
+        for key in dictionary:
 
-    return ["Reject"]
+            value1 = dictionary.get(key)
+            if key == "home":
+                list1 = value1
+                pvalue1 = (list1['country'])
+                if pvalue1 != "KAN":
+                    for key2 in countries_file:
+                        if key2 == pvalue1:
+                            control_flag = "T"
+                else:
+                    control_flag = "T"
+        if control_flag == "F":
+            print ["Reject"]
+        else:
+            print ["Accept"]
+
 
 
 def valid_passport_format(passport_number):
@@ -126,6 +150,7 @@ def valid_passport_format(passport_number):
     :return: Boolean; True if the format is valid, False otherwise
     """
 # TESTED & WORKING
+
     valid_passport_regex = re.compile(r'\w\w\w\w\w-\w\w\w\w\w-\w\w\w\w\w-\w\w\w\w\w-\w\w\w\w\w')
     valid_passport_match = valid_passport_regex.search(passport_number)
     if valid_passport_match is not None:
@@ -169,7 +194,9 @@ def valid_date_format(date_string):
 
 
 
-#entry_record_check()
+#entry_record_check(test_return)
+#location_check(test_return, countries)
+decide(test_return, countries)
 #valid_passport_format("JMZ0S-89IA9-OTCLY-MQILJ-P7CTY")
 #valid_visa_format("2f2h2-2sdf2")
 #valid_date_format("1997-89-00")
