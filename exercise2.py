@@ -72,7 +72,6 @@ def entry_record_check():
         if control_flag == "F":
             print(dictionary)
 
-
 def location_check():
     for dictionary in test_return:
         control_flag = "T"
@@ -81,6 +80,8 @@ def location_check():
                 control_flag = "F"
         if control_flag == "F":
             print(dictionary)
+
+
 #####################
 # HELPER FUNCTIONS ##
 #####################
@@ -124,12 +125,13 @@ def valid_passport_format(passport_number):
     :param passport_number: alpha-numeric string
     :return: Boolean; True if the format is valid, False otherwise
     """
-    valid_passport_regex = re.compile(r'\d\d\d\d\d-\d\d\d\d\d-\d\d\d\d\d-\d\d\d\d\d-\d\d\d\d\d')
-    valid_passport_match = valid_passport_regex.search(entry_record_contents)
-    if valid_passport_match is None:
-        return False
-    else:
+# TESTED & WORKING
+    valid_passport_regex = re.compile(r'\w\w\w\w\w-\w\w\w\w\w-\w\w\w\w\w-\w\w\w\w\w-\w\w\w\w\w')
+    valid_passport_match = valid_passport_regex.search(passport_number)
+    if valid_passport_match is not None:
         return True
+    else:
+        return False
 
 
 def valid_visa_format(visa_code):
@@ -140,6 +142,14 @@ def valid_visa_format(visa_code):
 
     """
 
+# TESTED & WORKING
+
+    valid_visa_regex = re.compile(r'\w\w\w\w\w-\w\w\w\w\w')
+    valid_visa_match = valid_visa_regex.search(visa_code)
+    if valid_visa_match is not None:
+        return True
+    else:
+        return False
 
 def valid_date_format(date_string):
     """
@@ -148,9 +158,18 @@ def valid_date_format(date_string):
     :return: Boolean True if the format is valid, False otherwise
     """
 
-    return False
+# TESTED & WORKING
+
+    valid_date_format_regex = re.compile(r'\d\d\d\d-\d\d-\d\d')
+    valid_date_format_match = valid_date_format_regex.search(date_string)
+    if valid_date_format_match is not None:
+        return True
+    else:
+        return False
 
 
-entry_record_check()
 
+#entry_record_check()
 #valid_passport_format("JMZ0S-89IA9-OTCLY-MQILJ-P7CTY")
+#valid_visa_format("2f2h2-2sdf2")
+#valid_date_format("1997-89-00")
