@@ -43,6 +43,9 @@ with open("test_jsons/countries.json", "r") as countries_reader:
     countries_contents = countries_reader.read()
     countries = json.loads(countries_contents)
 
+with open("countries.json", "r") as ministry_list_reader:
+    ministry_list_contents = ministry_list_reader.read()
+    ministry_list = json.load(ministry_list_contents)
 
 def entry_record_check():
     control_flag = "T"
@@ -52,6 +55,7 @@ def entry_record_check():
                 control_flag = "F"
         if control_flag == "F":
             print(dictionary)
+
 
 
 #####################
@@ -120,8 +124,11 @@ def valid_date_format(date_string):
     :param date_string: date to be checked
     :return: Boolean True if the format is valid, False otherwise
     """
-
-    return False
+    try:
+        datetime.datetime.strptime(date_string, '%Y-%m-%d')
+        return True
+    except ValueError:
+        return False
 
 
 entry_record_check()
