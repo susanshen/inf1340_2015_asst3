@@ -47,12 +47,9 @@ with open("test_jsons/countries.json", "r") as countries_reader:
 def entry_record_check():
     for dictionary in test_return:
         control_flag = "T"
-#        print "Start"
         for key in dictionary:
             value1 = dictionary.get(key)
             if key == "from":
-                #print("1-key", key)
-                #print("2-value1", value1)
                 for key1 in value1:
                     value2 = dictionary.get(key1)
                     pvalue0 = value1.values()
@@ -63,8 +60,6 @@ def entry_record_check():
                     elif pvalue0[2] == "":
                         control_flag = "F"
             if key == "home":
-                #print("1-key", key)
-                #print("2-value1", value1)
                 for key1 in value1:
                     value2 = dictionary.get(key1)
                     pvalue0 = value1.values()
@@ -74,25 +69,8 @@ def entry_record_check():
                         control_flag = "F"
                     elif pvalue0[2] == "":
                         control_flag = "F"
-                    #print("3-key1", key1)
-                    #print("4-value2", value2)
-                    #print("4a-pvalue0", pvalue0[0])
         if control_flag == "F":
             print(dictionary)
-
-
-#            if (dictionary.get(key)) == "":
-#                control_flag = "F"
-#            if key == "from":
-#                print("2-", key)
-#                for key1, value1 in key.iteritems(key1):
-#                    print key1, value1
-                    #print(dictionary.get(key))
-                 #   if key1 == "city":
-                    #    print("3")
-         #               control_flag = "F"
-         #   if control_flag == "F":
-              #  print(dictionary)
 
 
 def location_check():
