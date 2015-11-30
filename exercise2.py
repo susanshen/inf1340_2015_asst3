@@ -33,7 +33,6 @@ containing the following keys:
 '''
 COUNTRIES = None
 
-
 with open("test_jsons/test_returning_citizen.json", "r") as entry_record_reader:
     entry_record_contents = entry_record_reader.read()
     test_return = json.loads(entry_record_contents)
@@ -42,51 +41,52 @@ with open("test_jsons/countries.json", "r") as countries_reader:
     countries_contents = countries_reader.read()
     countries = json.loads(countries_contents)
 
+
 def entry_record_check(input_file):
     for dictionary in input_file:
         control_flag = "T"
         for key in dictionary:
             value1 = dictionary.get(key)
-            if key == "from":
+            if value1 == "":
+                control_flag = "F"
+            if key == REQUIRED_FIELDS[-1]:
                 list2 = value1
                 if (list2['city']) == "":
                     control_flag = "F"
                 elif (list2['region']) == "":
                     control_flag = "F"
                 elif (list2['country']) == "":
-                        control_flag = "F"
-            if key == "home":
+                    control_flag = "F"
+            if key == REQUIRED_FIELDS[4]:
                 list2 = value1
                 if (list2['city']) == "":
                     control_flag = "F"
                 elif (list2['region']) == "":
                     control_flag = "F"
                 elif (list2['country']) == "":
-                        control_flag = "F"
+                    control_flag = "F"
         if control_flag == "F":
             print(dictionary)
 
+
 def location_check(input_file, countries_file):
     for dictionary in input_file:
-        #control_flag = "T"
+        control_flag = "F"
         for key in dictionary:
             value1 = dictionary.get(key)
-            if key == "from":
+            if key == REQUIRED_FIELDS[-1]:
                 list1 = value1
                 pvalue1 = (list1['country'])
-
                 for key2 in countries_file:
                     if key2 == pvalue1:
-                        print (key2)
+                        control_flag = "T"
+        if control_flag == "F":
+            print ["Reject"]
+        else:
+            print ["Accept"]
 
-            if key == "home":
-                list2 = value1
-                pvalue2 = (list2['country'])
-                if pvalue2 != "KAN":
 
-                    for key3 in countries_file:
-                        if key3 == pvalue2:
-                            print (key3)
+#def validate_visa(input_file, visa_code, x, date_string):
 
 
 #####################
@@ -125,7 +125,6 @@ def decide(input_file, countries_file):
     for dictionary in input_file:
         control_flag = "F"
         for key in dictionary:
-
             value1 = dictionary.get(key)
             if key == "home":
                 list1 = value1
@@ -142,14 +141,13 @@ def decide(input_file, countries_file):
             print ["Accept"]
 
 
-
 def valid_passport_format(passport_number):
     """
     Checks whether a passport number is five sets of five alpha-number characters separated by dashes
     :param passport_number: alpha-numeric string
     :return: Boolean; True if the format is valid, False otherwise
     """
-# TESTED & WORKING
+    # TESTED & WORKING
 
     valid_passport_regex = re.compile(r'\w\w\w\w\w-\w\w\w\w\w-\w\w\w\w\w-\w\w\w\w\w-\w\w\w\w\w')
     valid_passport_match = valid_passport_regex.search(passport_number)
@@ -167,7 +165,7 @@ def valid_visa_format(visa_code):
 
     """
 
-# TESTED & WORKING
+    # TESTED & WORKING
 
     valid_visa_regex = re.compile(r'\w\w\w\w\w-\w\w\w\w\w')
     valid_visa_match = valid_visa_regex.search(visa_code)
@@ -176,6 +174,7 @@ def valid_visa_format(visa_code):
     else:
         return False
 
+
 def valid_date_format(date_string):
     """
     Checks whether a date has the format YYYY-mm-dd in numbers
@@ -183,7 +182,7 @@ def valid_date_format(date_string):
     :return: Boolean True if the format is valid, False otherwise
     """
 
-# TESTED & WORKING
+    # TESTED & WORKING
 
     valid_date_format_regex = re.compile(r'\d\d\d\d-\d\d-\d\d')
     valid_date_format_match = valid_date_format_regex.search(date_string)
@@ -193,10 +192,17 @@ def valid_date_format(date_string):
         return False
 
 
+#def main():
 
+# input_file =
+# countries_file =
+
+
+
+#main()
 #entry_record_check(test_return)
 #location_check(test_return, countries)
-decide(test_return, countries)
+#decide(test_return, countries)
 #valid_passport_format("JMZ0S-89IA9-OTCLY-MQILJ-P7CTY")
 #valid_visa_format("2f2h2-2sdf2")
 #valid_date_format("1997-89-00")
