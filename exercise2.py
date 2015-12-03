@@ -20,6 +20,7 @@ import json
 ######################
 REQUIRED_FIELDS = ["passport", "first_name", "last_name",
                    "birth_date", "home", "entry_reason", "from"]
+#for question 1, need to check if all fields are present as well (iterate through this list)
 
 ######################
 ## global variables ##
@@ -39,7 +40,7 @@ with open("test_jsons/test_returning_citizen.json", "r") as entry_record_reader:
 
 with open("test_jsons/countries.json", "r") as countries_reader:
     countries_contents = countries_reader.read()
-    countries = json.loads(countries_contents)
+    COUNTRIES = json.loads(countries_contents)
 
 
 def entry_record_check(input_file):
@@ -49,7 +50,7 @@ def entry_record_check(input_file):
             value1 = dictionary.get(key)
             if value1 == "":
                 control_flag = "F"
-            if key == REQUIRED_FIELDS[-1]:
+            if key == "from":
                 list2 = value1
                 if (list2['city']) == "":
                     control_flag = "F"
@@ -57,7 +58,7 @@ def entry_record_check(input_file):
                     control_flag = "F"
                 elif (list2['country']) == "":
                     control_flag = "F"
-            if key == REQUIRED_FIELDS[4]:
+            if key == "home":
                 list2 = value1
                 if (list2['city']) == "":
                     control_flag = "F"
@@ -74,7 +75,7 @@ def location_check(input_file, countries_file):
         control_flag = "F"
         for key in dictionary:
             value1 = dictionary.get(key)
-            if key == REQUIRED_FIELDS[-1]:
+            if key == "from":
                 list1 = value1
                 pvalue1 = (list1['country'])
                 for key2 in countries_file:
@@ -201,8 +202,8 @@ def valid_date_format(date_string):
 
 #main()
 #entry_record_check(test_return)
-#location_check(test_return, countries)
-#decide(test_return, countries)
+#location_check(test_return, COUNTRIES)
+#decide(test_return, COUNTRIES)
 #valid_passport_format("JMZ0S-89IA9-OTCLY-MQILJ-P7CTY")
 #valid_visa_format("2f2h2-2sdf2")
 #valid_date_format("1997-89-00")
