@@ -44,8 +44,6 @@ with open("test_jsons/countries.json", "r") as countries_reader:
     COUNTRIES = json.loads(countries_contents)
 
 
-
-
 def location_check(input_data, countries_file):
     control_flag = "F"
     for key in countries_file:
@@ -65,11 +63,8 @@ def visa_check(input_data, countries_file):
                 control_flag = "Accept"
             else:
                 control_flag = "Reject"
-##                if 0 < int(countries_file[key]['transit_visa_required']) <= 2:
-##                    control_flag = "Accept"
-##                else:
-##                    control_flag = "Reject"
-    return (control_flag)
+
+    return control_flag
 
 
 def medical_advisory_check(input_data, countries_file):
