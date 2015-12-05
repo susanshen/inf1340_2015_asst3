@@ -25,18 +25,3 @@ def test_returning():
     """
     assert decide("test_returning_citizen.json", "countries.json") ==\
         ["Accept", "Accept", "Quarantine"]
-
-
-def entry_record_check_complete(input_file):
-    """
-    Entry Record is complete.
-    """
-    assert decide("test_returning_citizen.json", "countries.json") ==\
-        ["Accept", "Accept", "Quarantine"]
-
-def entry_record_check_incomplete(input_file):
-    """
-    First entry record is incomplete.
-    """
-    assert decide("test_returning_citizen.json", "countries.json") ==\
-        ["Reject", "Accept", "Quarantine"]
