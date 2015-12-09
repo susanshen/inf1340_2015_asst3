@@ -14,6 +14,7 @@ __license__ = "MIT License"
 import re
 import datetime
 import json
+from collections import Counter, defaultdict
 
 ######################
 ## global constants ##
@@ -25,6 +26,7 @@ REQUIRED_FIELDS = ["passport", "first_name", "last_name",
 ######################
 ## global variables ##
 ######################
+
 '''
 countries:
 dictionary mapping country codes (lowercase strings) to dictionaries
@@ -43,198 +45,9 @@ with open("test_jsons/countries.json", "r") as countries_reader:
     countries_contents = countries_reader.read()
     COUNTRIES = json.loads(countries_contents)
 
-
-def location_check(input_data, countries_file):
-    control_flag = "F"
-    for key in countries_file:
-        if key.lower() == input_data.lower():
-            control_flag = "T"
-    if control_flag == "F":
-        return "Reject"
-    else:
-        return "Accept"
-
-
-def visa_check(input_data, countries_file):
-    control_flag = "Reject"
-    for key in countries_file:
-        if key.lower() == input_data.lower():
-            if 0 < int(countries_file[key]['visitor_visa_required']) <= 2:
-                control_flag = "Accept"
-            else:
-                control_flag = "Reject"
-
-    return control_flag
-
-
-def medical_advisory_check(input_data, countries_file):
-    control_flag = "Reject"
-    for key in countries_file:
-        if key.lower() == input_data.lower():
-            if countries_file[key]['medical_advisory'] == "":
-                control_flag = "Accept"
-            else:
-                control_flag = "Quarantine"
-    return control_flag
-
-
-def decide(input_file, countries_file):
-    """
-    Decides whether a traveller's entry into Kanadia should be accepted
-
-    :param input_file: The name of a JSON formatted file that contains
-        cases to decide
-    :param countries_file: The name of a JSON formatted file that contains
-        country data, such as whether an entry or transit visa is required,
-        and whether there is currently a medical advisory
-    :return: List of strings. Possible values of strings are:
-        "Accept", "Reject", and "Quarantine"
-    """
-
-    i = -1
-    for key1 in input_file:
-        i += 1
-        print('Record number', i+1)
-        missing_required_fields_flag = "Accept"
-        cnt1 = 0
-        try:
-            for key2 in key1:
-                if key2 in REQUIRED_FIELDS:
-                    cnt1 += 1
-            if cnt1 != 7:
-                x = 'y' + 6
-        except Exception:
-            print("JSON format is incorrect")
-##            print(e)
-            continue
-##        try:
-#########################################################################################################################
-        birth_date_flag = 'Accept'
-        passport_flag = 'Accept'
-        last_name_flag = 'Accept'
-        first_name_flag = 'Accept'
-        entry_reason_flag = 'Accept'
-        from_country_flag = 'Accept'
-        from_region_flag = 'Accept'
-        from_city_flag = 'Accept'
-        home_country_flag = 'Accept'
-        home_region_flag = 'Accept'
-        home_city_flag = 'Accept'
-        valid_date_format_flag = 'Accept'
-        valid_passport_format_flag = 'Accept'
-        visa_check_flag = 'Accept'
-
-        birth_date = (test_return[i]['birth_date'])
-        passport = (test_return[i]['passport'])
-        last_name = (test_return[i]['last_name'])
-        first_name = (test_return[i]['first_name'])
-        entry_reason = (test_return[i]['entry_reason'])
-        from_country = (test_return[i]['from']['country'])
-        from_region = (test_return[i]['from']['region'])
-        from_city = (test_return[i]['from']['city'])
-        home_country = (test_return[i]['home']['country'])
-        home_region = (test_return[i]['home']['region'])
-        home_city = (test_return[i]['home']['city'])
-
-        if birth_date == "":
-            birth_date_flag = 'Reject'
-        if passport == "":
-            passport_flag = 'Reject'
-        if last_name == "":
-            last_name_flag = 'Reject'
-        if first_name == "":
-            first_name_flag = 'Reject'
-        if entry_reason == "":
-            entry_reason_flag = 'Reject'
-        if from_country == "":
-            from_country_flag = 'Reject'
-        if from_region == "":
-            from_region_flag = 'Reject'
-        if from_city == "":
-            from_city_flag = 'Reject'
-        if home_country == "":
-            home_country_flag = 'Reject'
-        if home_region == "":
-            home_region_flag = 'Reject'
-        if home_city == "":
-            home_city_flag = 'Reject'
-
-        from_location_flag = location_check(from_country, countries_file)
-        if home_country.upper() == 'KAN':
-            home_location_flag = 'Accept'
-        else:
-            home_location_flag = location_check(home_country, countries_file)
-
-
-        from_med_adv_flag = medical_advisory_check(from_country, countries_file)
-
-        if entry_reason.lower() == 'visit':
-            visa_check_flag = visa_check(from_country, countries_file)
-
-        if not valid_date_format(birth_date):
-            valid_date_format_flag = 'Reject'
-
-        if not valid_passport_format(passport):
-            valid_passport_format_flag = 'Reject'
-
-
-##        if birth_date_flag == 'Reject':
-##            print('Record numner',i+1,'birth_date_flag',birth_date_flag)
-##        if passport_flag == 'Reject':
-##            print('Record numner',i+1,'passport_flag',passport_flag)
-##        if last_name_flag == 'Reject':
-##            print('Record numner',i+1,'last_name_flag',last_name_flag)
-##        if first_name_flag == 'Reject':
-##            print('Record numner',i+1,'first_name_flag',first_name_flag)
-##        if entry_reason_flag == 'Reject':
-##            print('Record numner',i+1,'entry_reason_flag',entry_reason_flag)
-##        if from_country_flag == 'Reject':
-##            print('Record numner',i+1,'from_country_flag',from_country_flag)
-##        if from_region_flag == 'Reject':
-##            print('Record numner',i+1,'from_region_flag',from_region_flag)
-##        if from_city_flag == 'Reject':
-##            print('Record numner',i+1,'from_city_flag',from_city_flag)
-##        if home_country_flag == 'Reject':
-##            print('Record numner',i+1,'home_country_flag',home_country_flag)
-##        if home_region_flag == 'Reject':
-##            print('Record numner',i+1,'home_region_flag',home_region_flag)
-##        if home_city_flag == 'Reject':
-##            print('Record numner',i+1,'home_city_flag',home_city_flag)
-##
-##        if from_location_flag == 'Reject':
-##            print('Record numner',i+1,'from_location_flag',from_location_flag)
-##        if home_location_flag == 'Reject':
-##            print('Record numner',i+1,'home_location_flag',home_location_flag)
-##
-##        if from_med_adv_flag == 'Reject' or from_med_adv_flag == 'Quarantine':
-##            print('Record numner',i+1,'from_med_adv_flag',from_med_adv_flag)
-##
-##        if visa_check_flag == 'Reject':
-##            print('Record numner',i+1,'visa_check_flag',visa_check_flag)
-
-##        if valid_date_format_flag == 'Reject':
-##            print('Record numner',i+1,'valid_date_format_flag',valid_date_format_flag)
-##
-##        if valid_passport_format_flag == 'Reject':
-##            print('Record numner',i+1,'valid_passport_format_flag',valid_passport_format_flag)
-
-        if missing_required_fields_flag == 'Reject' or valid_passport_format_flag == 'Reject' or valid_date_format_flag == 'Reject' or birth_date_flag == 'Reject' or passport_flag == 'Reject' or last_name_flag == 'Reject' or first_name_flag == 'Reject' or entry_reason_flag == 'Reject' or from_country_flag == 'Reject' or from_region_flag == 'Reject' or from_city_flag == 'Reject' or home_country_flag == 'Reject' or home_region_flag == 'Reject' or home_city_flag == 'Reject' or from_location_flag == 'Reject' or home_location_flag == 'Reject' or from_med_adv_flag == 'Reject' or from_med_adv_flag == 'Reject':
-            print('Reject')
-        elif from_med_adv_flag == 'Quarantine':
-            print('Quarantine')
-        else:
-            print('Accept')
-#########################################################################################################################
-##        except KeyError:
-##            print("JSON format is incorrect")
-
-##        print('********************************************************************')
-
 #####################
 # HELPER FUNCTIONS ##
 #####################
-
-
 def is_more_than_x_years_ago(x, date_string):
     """
     Check if date is less than x years ago.
@@ -248,7 +61,9 @@ def is_more_than_x_years_ago(x, date_string):
     x_years_ago = now.replace(year=now.year - x)
     date = datetime.datetime.strptime(date_string, '%Y-%m-%d')
 
-    return (date - x_years_ago).total_seconds() < 0
+##        return (date - x_years_ago).total_seconds() < 0
+    global x_years_flag
+    x_years_flag = (date - x_years_ago).total_seconds() < 0
 
 
 def valid_visa_format(visa_code):
@@ -258,15 +73,13 @@ def valid_visa_format(visa_code):
     :return: Boolean; True if the format is valid, False otherwise
 
     """
-
-    # TESTED & WORKING
-
+    global valid_visa_format_flag
     valid_visa_regex = re.compile(r'\w\w\w\w\w-\w\w\w\w\w')
     valid_visa_match = valid_visa_regex.search(visa_code)
     if valid_visa_match is not None:
-        return True
+        valid_visa_format_flag = True
     else:
-        return False
+        valid_visa_format_flag = False
 
 
 def valid_date_format(date_string):
@@ -277,13 +90,13 @@ def valid_date_format(date_string):
     """
 
     # TESTED & WORKING
-
+    global valid_date_format_flag
     valid_date_format_regex = re.compile(r'\d\d\d\d-\d\d-\d\d')
     valid_date_format_match = valid_date_format_regex.search(date_string)
     if valid_date_format_match is not None:
-        return True
+        valid_date_format_flag = True
     else:
-        return False
+        valid_date_format_flag = False
 
 
 def valid_passport_format(passport_number):
@@ -293,13 +106,189 @@ def valid_passport_format(passport_number):
     :return: Boolean; True if the format is valid, False otherwise
     """
     # TESTED & WORKING
-
+    global valid_passport_format_flag
     valid_passport_regex = re.compile(r'\w\w\w\w\w-\w\w\w\w\w-\w\w\w\w\w-\w\w\w\w\w-\w\w\w\w\w')
     valid_passport_match = valid_passport_regex.search(passport_number)
     if valid_passport_match is not None:
-        return True
+        valid_passport_format_flag = True
     else:
-        return False
+        valid_passport_format_flag = False
+
+def location_check(input_data, countries_file):
+    global location_check_flag
+##    print('input_data-',input_data.upper())
+    count = 0
+    for key in countries_file:
+##        print('key-',key)
+        if input_data.upper() == key:
+            count += 1
+    if count == 0:
+        location_check_flag = 'R'
+    else:
+        location_check_flag = 'A'
+
+def visit_visa_check(input_data, countries_file):
+    global visit_visa_check_flag
+    for key in countries_file:
+        if key.lower() == input_data.lower():
+            if int(countries_file[key]['visitor_visa_required']) == 1:
+                visit_visa_check_flag = True
+            else:
+                visit_visa_check_flag = False
+
+def medical_advisory_check(input_data, countries_file):
+    global medical_advisory_check_flag
+    medical_advisory_check_flag = 'A'
+    for key in countries_file:
+        if key.lower() == input_data.lower():
+            if countries_file[key]['medical_advisory'] == "":
+                medical_advisory_check_flag = 'A'
+##                print('medical_advisory_check_flag',medical_advisory_check_flag)
+            else:
+                medical_advisory_check_flag = 'Q'
+##                print('medical_advisory_check_flag',medical_advisory_check_flag)
 
 
-decide(test_return, COUNTRIES)
+def decide(input_file, countries_file):
+       
+    """
+    Decides whether a traveller's entry into Kanadia should be accepted
+
+    :param input_file: The name of a JSON formatted file that contains
+        cases to decide
+    :param countries_file: The name of a JSON formatted file that contains
+        country data, such as whether an entry or transit visa is required,
+        and whether there is currently a medical advisory
+    :return: List of strings. Possible values of strings are:
+        "Accept", "Reject", and "Quarantine"
+    """
+    list = []
+##    j = len(input_file) 
+    i = 0
+##    int j 
+    while (i < len(test_return) ):
+        cnt_flag = 'F'
+        
+##        print('i -',  i)
+##        print('j -',  j)
+##        print('key1a -',  key1)
+##        print( 'key1b -', len(key1))
+    # initializing all control flags to 'Accept' first
+##        i = int(count)
+
+        for rf_key in REQUIRED_FIELDS:
+            for key1 in test_return:
+                if rf_key not in key1:
+                    cnt_flag = 'R'
+##        print('1cnt_flag -',  cnt_flag)
+        birth_date = (test_return[i]['birth_date'])
+        passport = (test_return[i]['passport'])
+        last_name = (test_return[i]['last_name'])
+        first_name = (test_return[i]['first_name'])
+        entry_reason = (test_return[i]['entry_reason'])
+        from_country = (test_return[i]['from']['country'])
+        from_region = (test_return[i]['from']['region'])
+        from_city = (test_return[i]['from']['city'])
+        home_country = (test_return[i]['home']['country'])
+        home_region = (test_return[i]['home']['region'])
+        home_city = (test_return[i]['home']['city'])
+        if birth_date == "" and cnt_flag != 'R':
+            cnt_flag = 'R'
+##            print('2cnt_flag -',  cnt_flag)
+        if passport == "" and cnt_flag != 'R':
+            cnt_flag = 'R'
+##            print('3cnt_flag -',  cnt_flag)
+	# Checking format of passport
+        valid_passport_format(passport)
+        if valid_passport_format_flag == False and cnt_flag != 'R':
+            cnt_flag = 'R'
+##            print('4cnt_flag -',  cnt_flag)
+        if last_name == "" and cnt_flag != 'R':
+            cnt_flag = 'R'
+##            print('5cnt_flag -',  cnt_flag)
+        if first_name == "" and cnt_flag != 'R':
+            cnt_flag = 'R'
+##            print('6cnt_flag -',  cnt_flag)
+        if entry_reason == "" and cnt_flag != 'R':
+            cnt_flag = 'R'
+        if entry_reason.lower() == 'visiting':
+            visa_code = (test_return[i]['visa_code'])
+            visa_date = (test_return[i]['visa_date'])
+            visit_visa_check(from_country, COUNTRIES)
+            if visit_visa_check_flag:
+                valid_visa_format(visa_code)
+                if not valid_visa_format_flag and cnt_flag != 'R':
+                    cnt_flag = 'R'
+##                    print('7cnt_flag -',  cnt_flag)
+                valid_date_format(visa_date)
+                if not valid_date_format_flag and cnt_flag != 'R':
+                    cnt_flag = 'R'
+##                    print('8cnt_flag -',  cnt_flag)
+                is_more_than_x_years_ago(2,visa_date)
+                if not x_years_flag and cnt_flag != 'R':
+                    cnt_flag = 'R'
+##                    print('9cnt_flag -',  cnt_flag)
+        if from_country == "" and cnt_flag != 'R':
+            cnt_flag = 'R'
+##            print('10cnt_flag -',  cnt_flag)
+        if from_region == "" and cnt_flag != 'R':
+            cnt_flag = 'R'
+##            print('11cnt_flag -',  cnt_flag)
+        if from_city == "" and cnt_flag != 'R':
+            cnt_flag = 'R'
+##            print('12cnt_flag -',  cnt_flag)
+	# Decision for Question 2
+        location_check(from_country, COUNTRIES)
+        if location_check_flag == 'R' and cnt_flag != 'R':
+            cnt_flag = 'R'
+##            print('13cnt_flag -',  cnt_flag)
+        # Decision for Question 5
+        medical_advisory_check(from_country, COUNTRIES)
+        if medical_advisory_check_flag == 'Q' and cnt_flag != 'R':
+            cnt_flag = 'Q'
+##            print('14cnt_flag',cnt_flag)
+##        else:
+##            cnt_flag = 'A'
+##            print('15cnt_flag',cnt_flag)
+##        location_check(home_country, countries_file)
+##        if location_check_flag == 'R' and cnt_flag != 'R':
+##            cnt_flag = 'R'
+##            print('16cnt_flag -',  cnt_flag)
+        if home_country == "" and cnt_flag != 'R':
+            cnt_flag = 'R'
+##            print('17cnt_flag -',  cnt_flag)
+        if home_region == "" and cnt_flag != 'R':
+            cnt_flag = 'R'
+##            print('18cnt_flag -',  cnt_flag)
+        if home_city == "" and cnt_flag != 'R':
+            cnt_flag = 'R'
+##            print('19cnt_flag -',  cnt_flag)
+        # Decision for Question 3
+        if home_country.upper() == 'KAN' and cnt_flag == 'F':
+            cnt_flag = 'A'
+##            print('20cnt_flag -',  cnt_flag)
+##        else:
+##            location_check(home_country, countries_file)
+##            if location_check_flag == 'R' and cnt_flag != 'R':
+##                cnt_flag = 'R'
+##                print('21cnt_flag -',  cnt_flag)
+        # If any of the above checks return 'Reject' the entry record will be rejected
+##        print('22cnt_flag',cnt_flag)
+        if cnt_flag != 'F' :
+            if cnt_flag == 'R':
+                list.append("Reject")
+            elif cnt_flag == 'Q':
+                list.append("Quarantine")
+            else:
+                list.append("Accept")
+            cnt_flag = 'F'
+        i = i + 1
+        continue 
+    return  list
+
+    
+##if __name__ == "__main__":
+##    # execute only if run as a script
+##    main()
+##p = location_check('LUG', COUNTRIES)
+##print(p)
