@@ -119,6 +119,15 @@ def valid_passport_format(passport_number):
 
 
 def location_check(input_data, countries_file):
+    """
+    Checks if any location mentioned in entry record is unknown
+    :param input_file: The name of a JSON formatted file that contains
+        cases to decide
+    :param countries_file: The name of a JSON formatted file that contains
+        country data, such as whether an entry or transit visa is required,
+        and whether there is currently a medical advisory
+    :return: Reject if location is unknown and accept if location is known
+    """
     global location_check_flag
     count = 0
     for key in countries_file:
@@ -131,6 +140,15 @@ def location_check(input_data, countries_file):
 
 
 def visit_visa_check(input_data, countries_file):
+    """
+    Checks if country requires visa
+    :param input_file: The name of a JSON formatted file that contains
+        cases to decide
+    :param countries_file: The name of a JSON formatted file that contains
+        country data, such as whether an entry or transit visa is required,
+        and whether there is currently a medical advisory
+    :return: Boolean; True if requires visa, False otherwise
+    """
     global visit_visa_check_flag
     for key in countries_file:
         if key.lower() == input_data.lower():
@@ -141,6 +159,15 @@ def visit_visa_check(input_data, countries_file):
 
 
 def medical_advisory_check(input_data, countries_file):
+    """
+    Checks if traveller is coming from a country with a medical advisory
+    :param input_file: The name of a JSON formatted file that contains
+        cases to decide
+    :param countries_file: The name of a JSON formatted file that contains
+        country data, such as whether an entry or transit visa is required,
+        and whether there is currently a medical advisory
+    :return: Accept if traveller does not come from a country with a medical advisory, quarantine if otherwise
+    """
     global medical_advisory_check_flag
     medical_advisory_check_flag = 'A'
     for key in countries_file:
@@ -154,7 +181,6 @@ def medical_advisory_check(input_data, countries_file):
 def decide(input_file, countries_file):      
     """
     Decides whether a traveller's entry into Kanadia should be accepted
-
     :param input_file: The name of a JSON formatted file that contains
         cases to decide
     :param countries_file: The name of a JSON formatted file that contains
