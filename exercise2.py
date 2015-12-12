@@ -16,12 +16,12 @@ import datetime
 import json
 from collections import Counter, defaultdict
 
-
 ######################
 #  global constants ##
 ######################
 REQUIRED_FIELDS = ["passport", "first_name", "last_name",
                    "birth_date", "home", "entry_reason", "from"]
+
 
 ######################
 #  global variables ##
@@ -121,9 +121,8 @@ def entry_record_check(input_file):
         
         # initializing all control flags to 'Accept' first
         for rf_key in REQUIRED_FIELDS:
-            for key1 in test_return:
-                if rf_key not in key1:
-                    cnt_flag = 'R'
+            if rf_key not in test_return[i]:
+                cnt_flag = 'R'
         if cnt_flag != 'R':
             birth_date = (test_return[i]['birth_date'])
             passport = (test_return[i]['passport'])
@@ -164,58 +163,6 @@ def entry_record_check(input_file):
                 list.append("Accept")
             i += 1
         continue
-    return list
-
-
-def location_check(input_file, countries_file):
-
-    with open(input_file, "r") as entry_record_reader:
-        entry_record_contents = entry_record_reader.read()
-        test_return = json.loads(entry_record_contents)
-
-    with open(countries_file, "r") as countries_reader:
-        countries_contents = countries_reader.read()
-        COUNTRIES = json.loads(countries_contents)
-    list = []
-    for dictionary in test_return:
-        control_flag = "F"
-        for key in dictionary:
-            value1 = dictionary.get(key)
-            if key == "from":
-                list1 = value1
-                pvalue1 = (list1['country'])
-                for key2 in COUNTRIES:
-                    if key2 == pvalue1:
-                        control_flag = "T"
-        if control_flag == "F":
-            list.append("Reject")
-        else:
-            list.append("Accept")
-    return list
-
-
-def medical_advisory_check(input_file, countries_file):
-    with open(input_file, "r") as entry_record_reader:
-        entry_record_contents = entry_record_reader.read()
-        test_return = json.loads(entry_record_contents)
-
-    with open(countries_file, "r") as countries_reader:
-        countries_contents = countries_reader.read()
-        COUNTRIES = json.loads(countries_contents)
-
-    list = []
-    i = 0
-    while i < len(test_return):
-        cnt_flag = 'F'
-        from_country = (test_return[i]['from']['country'])
-        for key in COUNTRIES:
-            if key.lower() == from_country.lower():
-                if COUNTRIES[key]['medical_advisory'] == "":
-                    list.append("Accept")
-                else:
-                    list.append("Quarantine")
-        i += 1
-        continue 
     return list
 
 
@@ -302,15 +249,15 @@ def decide(input_file, countries_file):
         list = []
         i = 0
         while i < len(test_return):
+            # initializing all control flags to 'Accept' first
             cnt_flag = 'A'
             print(i)
-            print(cnt_flag)
-            
-            # initializing all control flags to 'Accept' first
             for rf_key in REQUIRED_FIELDS:
-                for key1 in test_return:
-                    if rf_key not in key1:
-                        cnt_flag = 'R'
+                if rf_key not in test_return[i]:
+                    cnt_flag = 'R'
+                    exit
+            if cnt_flag == 'R':
+                exit
             if cnt_flag != 'R':
                 birth_date = (test_return[i]['birth_date'])
                 passport = (test_return[i]['passport'])
@@ -422,14 +369,12 @@ def decide(input_file, countries_file):
                 print('19-', cnt_flag)
 
             # If any of the above checks return 'Reject' the entry record will be rejected
-            if cnt_flag != 'F':
-                if cnt_flag == 'R':
-                    list.append("Reject")
-                elif cnt_flag == 'Q':
-                    list.append("Quarantine")
-                else:
-                    list.append("Accept")
-                cnt_flag = 'F'
+            if cnt_flag == 'R':
+                list.append("Reject")
+            elif cnt_flag == 'Q':
+                list.append("Quarantine")
+            else:
+                list.append("Accept")
             i += 1
             continue 
         return list
