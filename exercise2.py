@@ -16,27 +16,15 @@ import datetime
 import json
 from collections import Counter, defaultdict
 
-##with open("test_jsons/test_returning_citizen.json", "r") as entry_record_reader:
-##with open("C:\\Users\\wonke\\Desktop\\Python\\Deanna\\Assignment\\test_returning_citizen.json", "r") as entry_record_reader:
-##    with open(input_file, "r") as entry_record_reader:
-##        entry_record_contents = entry_record_reader.read()
-##        test_return = json.loads(entry_record_contents)
-
-##with open("test_jsons/countries.json", "r") as countries_reader:
-##with open("C:\\Users\\wonke\\Desktop\\Python\\Deanna\\Assignment\\countries.json", "r") as countries_reader:
-##    with open(countries_file, "r") as countries_reader:
-##        countries_contents = countries_reader.read()
-##        COUNTRIES = json.loads(countries_contents)
 
 ######################
-## global constants ##
+#  global constants ##
 ######################
 REQUIRED_FIELDS = ["passport", "first_name", "last_name",
                    "birth_date", "home", "entry_reason", "from"]
-#for question 1, need to check if all fields are present as well (iterate through this list)
 
 ######################
-## global variables ##
+#  global variables ##
 ######################
 
 '''
@@ -136,44 +124,45 @@ def entry_record_check(input_file):
             for key1 in test_return:
                 if rf_key not in key1:
                     cnt_flag = 'R'
-        birth_date = (test_return[i]['birth_date'])
-        passport = (test_return[i]['passport'])
-        last_name = (test_return[i]['last_name'])
-        first_name = (test_return[i]['first_name'])
-        entry_reason = (test_return[i]['entry_reason'])
-        from_country = (test_return[i]['from']['country'])
-        from_region = (test_return[i]['from']['region'])
-        from_city = (test_return[i]['from']['city'])
-        home_country = (test_return[i]['home']['country'])
-        home_region = (test_return[i]['home']['region'])
-        home_city = (test_return[i]['home']['city'])
-        if birth_date == "" and cnt_flag != 'R':
-            cnt_flag = 'R'
-        if passport == "" and cnt_flag != 'R':
-            cnt_flag = 'R'
-        if last_name == "" and cnt_flag != 'R':
-            cnt_flag = 'R'
-        if first_name == "" and cnt_flag != 'R':
-            cnt_flag = 'R'
-        if entry_reason == "" and cnt_flag != 'R':
-            cnt_flag = 'R'
-        if from_country == "" and cnt_flag != 'R':
-            cnt_flag = 'R'
-        if from_region == "" and cnt_flag != 'R':
-            cnt_flag = 'R'
-        if from_city == "" and cnt_flag != 'R':
-            cnt_flag = 'R'
-        if home_country == "" and cnt_flag != 'R':
-            cnt_flag = 'R'
-        if home_region == "" and cnt_flag != 'R':
-            cnt_flag = 'R'
-        if home_city == "" and cnt_flag != 'R':
-            cnt_flag = 'R'
-        if cnt_flag == "R":
-            list.append("Reject")
-        else:
-            list.append("Accept")
-        i += 1
+        if cnt_flag != 'R':
+            birth_date = (test_return[i]['birth_date'])
+            passport = (test_return[i]['passport'])
+            last_name = (test_return[i]['last_name'])
+            first_name = (test_return[i]['first_name'])
+            entry_reason = (test_return[i]['entry_reason'])
+            from_country = (test_return[i]['from']['country'])
+            from_region = (test_return[i]['from']['region'])
+            from_city = (test_return[i]['from']['city'])
+            home_country = (test_return[i]['home']['country'])
+            home_region = (test_return[i]['home']['region'])
+            home_city = (test_return[i]['home']['city'])
+            if birth_date == "" and cnt_flag != 'R':
+                cnt_flag = 'R'
+            if passport == "" and cnt_flag != 'R':
+                cnt_flag = 'R'
+            if last_name == "" and cnt_flag != 'R':
+                cnt_flag = 'R'
+            if first_name == "" and cnt_flag != 'R':
+                cnt_flag = 'R'
+            if entry_reason == "" and cnt_flag != 'R':
+                cnt_flag = 'R'
+            if from_country == "" and cnt_flag != 'R':
+                cnt_flag = 'R'
+            if from_region == "" and cnt_flag != 'R':
+                cnt_flag = 'R'
+            if from_city == "" and cnt_flag != 'R':
+                cnt_flag = 'R'
+            if home_country == "" and cnt_flag != 'R':
+                cnt_flag = 'R'
+            if home_region == "" and cnt_flag != 'R':
+                cnt_flag = 'R'
+            if home_city == "" and cnt_flag != 'R':
+                cnt_flag = 'R'
+            if cnt_flag == "R":
+                list.append("Reject")
+            else:
+                list.append("Accept")
+            i += 1
         continue
     return list
 
@@ -322,114 +311,115 @@ def decide(input_file, countries_file):
                 for key1 in test_return:
                     if rf_key not in key1:
                         cnt_flag = 'R'
-            birth_date = (test_return[i]['birth_date'])
-            passport = (test_return[i]['passport'])
-            last_name = (test_return[i]['last_name'])
-            first_name = (test_return[i]['first_name'])
-            entry_reason = (test_return[i]['entry_reason'])
-            from_country = (test_return[i]['from']['country'])
-            from_region = (test_return[i]['from']['region'])
-            from_city = (test_return[i]['from']['city'])
-            home_country = (test_return[i]['home']['country'])
-            home_region = (test_return[i]['home']['region'])
-            home_city = (test_return[i]['home']['city'])
-            if birth_date == "" and cnt_flag != 'R':
-                print('1-', cnt_flag)
-                cnt_flag = 'R'
-            print('1-', cnt_flag)
-            if passport == "" and cnt_flag != 'R':
-                cnt_flag = 'R'
-                print('2-', cnt_flag)
-            print('2-', cnt_flag)
-
-            # Checking format of passport
-            valid_passport_format(passport)
-            if valid_passport_format_flag == False and cnt_flag != 'R':
-                cnt_flag = 'R'
-                print('3-', cnt_flag)
-            print('3-', cnt_flag)
-            if last_name == "" and cnt_flag != 'R':
-                cnt_flag = 'R'
-                print('4-', cnt_flag)
-            print('4-', cnt_flag)
-            if first_name == "" and cnt_flag != 'R':
-                cnt_flag = 'R'
-                print('5-', cnt_flag)
-            print('5-', cnt_flag)
-            if entry_reason == "" and cnt_flag != 'R':
-                cnt_flag = 'R'
-                print('6-', cnt_flag)
-            print('6-', cnt_flag)
-            if entry_reason.lower() == 'visiting':
-                if 'visa_code' in (test_return[i]) and 'visa_date' in (test_return[i]):
-                    visa_code = (test_return[i]['visa_code'])
-                    visa_date = (test_return[i]['visa_date'])
-                    visit_visa_check(from_country, COUNTRIES)
-                    if visit_visa_check_flag:
-                        valid_visa_format(visa_code)
-                        if valid_visa_format_flag == False and cnt_flag != 'R':
-                            cnt_flag = 'R'
-                            print('7-', cnt_flag)
-                        print('7-', cnt_flag)
-                        valid_date_format(visa_date)
-                        if valid_date_format_flag == False and cnt_flag != 'R':
-                            cnt_flag = 'R'
-                            print('8-', cnt_flag)
-                        else:
-                            is_more_than_x_years_ago(2,visa_date)
-                            if x_years_flag == False and cnt_flag != 'R':
-                                cnt_flag = 'R'
-                                print('9-', cnt_flag)
-                            print('9-', cnt_flag)
-                        print('8-', cnt_flag)
-                else:
+            if cnt_flag != 'R':
+                birth_date = (test_return[i]['birth_date'])
+                passport = (test_return[i]['passport'])
+                last_name = (test_return[i]['last_name'])
+                first_name = (test_return[i]['first_name'])
+                entry_reason = (test_return[i]['entry_reason'])
+                from_country = (test_return[i]['from']['country'])
+                from_region = (test_return[i]['from']['region'])
+                from_city = (test_return[i]['from']['city'])
+                home_country = (test_return[i]['home']['country'])
+                home_region = (test_return[i]['home']['region'])
+                home_city = (test_return[i]['home']['city'])
+                if birth_date == "" and cnt_flag != 'R':
+                    print('1-', cnt_flag)
                     cnt_flag = 'R'
+                print('1-', cnt_flag)
+                if passport == "" and cnt_flag != 'R':
+                    cnt_flag = 'R'
+                    print('2-', cnt_flag)
+                print('2-', cnt_flag)
+
+                # Checking format of passport
+                valid_passport_format(passport)
+                if valid_passport_format_flag == False and cnt_flag != 'R':
+                    cnt_flag = 'R'
+                    print('3-', cnt_flag)
+                print('3-', cnt_flag)
+                if last_name == "" and cnt_flag != 'R':
+                    cnt_flag = 'R'
+                    print('4-', cnt_flag)
+                print('4-', cnt_flag)
+                if first_name == "" and cnt_flag != 'R':
+                    cnt_flag = 'R'
+                    print('5-', cnt_flag)
+                print('5-', cnt_flag)
+                if entry_reason == "" and cnt_flag != 'R':
+                    cnt_flag = 'R'
+                    print('6-', cnt_flag)
+                print('6-', cnt_flag)
+                if entry_reason.lower() == 'visiting':
+                    if 'visa_code' in (test_return[i]) and 'visa_date' in (test_return[i]):
+                        visa_code = (test_return[i]['visa_code'])
+                        visa_date = (test_return[i]['visa_date'])
+                        visit_visa_check(from_country, COUNTRIES)
+                        if visit_visa_check_flag:
+                            valid_visa_format(visa_code)
+                            if valid_visa_format_flag == False and cnt_flag != 'R':
+                                cnt_flag = 'R'
+                                print('7-', cnt_flag)
+                            print('7-', cnt_flag)
+                            valid_date_format(visa_date)
+                            if valid_date_format_flag == False and cnt_flag != 'R':
+                                cnt_flag = 'R'
+                                print('8-', cnt_flag)
+                            else:
+                                is_more_than_x_years_ago(2,visa_date)
+                                if x_years_flag == False and cnt_flag != 'R':
+                                    cnt_flag = 'R'
+                                    print('9-', cnt_flag)
+                                print('9-', cnt_flag)
+                            print('8-', cnt_flag)
+                    else:
+                        cnt_flag = 'R'
+                        print('10-', cnt_flag)
                     print('10-', cnt_flag)
-                print('10-', cnt_flag)
-            if from_country == "" and cnt_flag != 'R':
-                cnt_flag = 'R'
+                if from_country == "" and cnt_flag != 'R':
+                    cnt_flag = 'R'
+                    print('11-', cnt_flag)
                 print('11-', cnt_flag)
-            print('11-', cnt_flag)
-            if from_region == "" and cnt_flag != 'R':
-                cnt_flag = 'R'
+                if from_region == "" and cnt_flag != 'R':
+                    cnt_flag = 'R'
+                    print('12-', cnt_flag)
                 print('12-', cnt_flag)
-            print('12-', cnt_flag)
-            if from_city == "" and cnt_flag != 'R':
-                cnt_flag = 'R'
+                if from_city == "" and cnt_flag != 'R':
+                    cnt_flag = 'R'
+                    print('13-', cnt_flag)
                 print('13-', cnt_flag)
-            print('13-', cnt_flag)
 
-            # Decision for Question 2
-            location_check1(from_country, COUNTRIES)
-            if location_check_flag == 'R' and cnt_flag != 'R':
-                cnt_flag = 'R'
+                # Decision for Question 2
+                location_check1(from_country, COUNTRIES)
+                if location_check_flag == 'R' and cnt_flag != 'R':
+                    cnt_flag = 'R'
+                    print('14-',cnt_flag)
                 print('14-',cnt_flag)
-            print('14-',cnt_flag)
 
-            # Decision for Question 5
-            medical_advisory_check1(from_country, COUNTRIES)
-            if medical_advisory_check_flag == 'Q' and cnt_flag != 'R':
-                cnt_flag = 'Q'
+                # Decision for Question 5
+                medical_advisory_check1(from_country, COUNTRIES)
+                if medical_advisory_check_flag == 'Q' and cnt_flag != 'R':
+                    cnt_flag = 'Q'
+                    print('15-', cnt_flag)
                 print('15-', cnt_flag)
-            print('15-', cnt_flag)
-            if home_country == "" and cnt_flag != 'R':
-                cnt_flag = 'R'
+                if home_country == "" and cnt_flag != 'R':
+                    cnt_flag = 'R'
+                    print('16-', cnt_flag)
                 print('16-', cnt_flag)
-            print('16-', cnt_flag)
-            if home_region == "" and cnt_flag != 'R':
-                cnt_flag = 'R'
+                if home_region == "" and cnt_flag != 'R':
+                    cnt_flag = 'R'
+                    print('17-', cnt_flag)
                 print('17-', cnt_flag)
-            print('17-', cnt_flag)
-            if home_city == "" and cnt_flag != 'R':
-                cnt_flag = 'R'
+                if home_city == "" and cnt_flag != 'R':
+                    cnt_flag = 'R'
+                    print('18-', cnt_flag)
                 print('18-', cnt_flag)
-            print('18-', cnt_flag)
 
-            # Decision for Question 3
-            if home_country.upper() == 'KAN' and cnt_flag == 'F':
-                cnt_flag = 'A'
+                # Decision for Question 3
+                if home_country.upper() == 'KAN' and cnt_flag == 'F':
+                    cnt_flag = 'A'
+                    print('19-', cnt_flag)
                 print('19-', cnt_flag)
-            print('19-', cnt_flag)
 
             # If any of the above checks return 'Reject' the entry record will be rejected
             if cnt_flag != 'F':
