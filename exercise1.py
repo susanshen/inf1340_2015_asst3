@@ -54,6 +54,10 @@ class UnknownAttributeException(Exception):
     """
     pass
 
+def filter_employees(row):
+    return row[-2] >= 30 and row[-1] > 3500
+
+######################
 
 def selection(t, f):
     """
@@ -68,15 +72,19 @@ def selection(t, f):
     [["A", "B", "C"], [4, 5, 6]]
 
     """
+
     selection_table = []
-    def filter_employee(row):
 
-        row[-2] >= 30 and row[-1] > 3500
+    for row in t:
+	    #check if row on table satisfy function and add to created table
+	    if f(row) is True:
+	        selection_table.append(row)
+            else:
+                continue
 
+    return selection_table
 
-
-    return []
-
+#selection (EMPLOYEES, filter_employees)
 
 def projection(t, r):
     """
@@ -124,5 +132,5 @@ def cross_product(t1, t2):
 
     return cross_table
 
-cross_product(R1,R2)
+#cross_product(R1,R2)
 
