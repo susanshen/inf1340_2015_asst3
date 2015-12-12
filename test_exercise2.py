@@ -37,12 +37,12 @@ def test_case_sensitivity():
         ["Accept", "Accept", "Quarantine"]
 
 
-#def test_entry_record_completeness():
-#    """
-#    Traveller's entry record completeness is checked when they are returning or visiting a country.
-#    """
-#    assert decide("test_entry_record_completeness.json", "countries.json") ==\
-#        ["Reject", "Accept", "Reject"]
+def test_entry_record_completeness():
+    """
+    Traveller's entry record completeness is checked when they are returning or visiting a country.
+    """
+    assert decide("test_entry_record_completeness.json", "countries.json") ==\
+        ["Reject", "Reject", "Reject"]
 
 
 def test_number_of_records_1():
