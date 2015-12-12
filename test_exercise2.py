@@ -29,6 +29,14 @@ def test_returning():
         ["Accept", "Accept", "Quarantine"]
 
 
+def test_case_sensitivity():
+    """
+    Travellers are returning to KAN. Country code and passport number correctness is checked.
+    """
+    assert decide("test_returning_citizen_2.json", "countries.json") ==\
+        ["Accept", "Accept", "Quarantine"]
+
+
 def test_entry_record_completeness():
     """
     Traveller's entry record completeness is checked when they are returning or visiting a country.
@@ -62,6 +70,14 @@ def test_visa_validation():
     """
     assert decide("test_visa_validation.json", "countries.json") ==\
         ["Reject", "Accept", "Reject"]
+
+
+def test_medical_advisory_check():
+    """
+    Traveller is coming from or travelling through a country with a medical advisory.
+    """
+    assert decide("test_medical_advisory_check.json", "countries.json") ==\
+        ["Quarantine", "Accept", "Quarantine"]
 
 
 def test_valid_visa_format():
