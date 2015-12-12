@@ -105,26 +105,24 @@ def cross_product(t1, t2):
     """
     #combine table headings
     column_titles = t1[0] + t2[0]
-    cross_table = [ ]
+    cross_table = []
     count = 0
     #remove headings from tables
     del t1[0]
     del t2[0]
 
-    while count < len (t1):
-        for list1 in t1:
-            for list2 in t2:
-                if list2 not in list1:
-                    #combines tables into new table (without headings)
-                    combined_table = list1 + list2
-                    cross_table.append(combined_table)
-                    count += 1
-                else:
-                    continue
+    for list1 in t1:
+        for list2 in t2:
+            if list2 not in list1:
+            #combines tables into new table (without headings)
+                combined_table = list1 + list2
+                cross_table.append(combined_table)
+            else:
+                continue
     #inserts heading back to new table
     cross_table.insert(0,column_titles)
 
     return cross_table
 
-#cross_product(R1,R2)
+cross_product(R1,R2)
 
