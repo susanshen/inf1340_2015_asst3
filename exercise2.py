@@ -252,12 +252,15 @@ def decide(input_file, countries_file):
             # initializing all control flags to 'Accept' first
             cnt_flag = 'A'
             print(i)
+            # Checking if all required fields exist
             for rf_key in REQUIRED_FIELDS:
                 if rf_key not in test_return[i]:
+                    # If required field does not exist, return Reject
                     cnt_flag = 'R'
+                    # If Reject is detected, do not need to check if other decisions will be Quarantine or Accept
+                    # because Reject takes first priority
                     exit
-            if cnt_flag == 'R':
-                exit
+            # Getting value of all fields
             if cnt_flag != 'R':
                 birth_date = (test_return[i]['birth_date'])
                 passport = (test_return[i]['passport'])
@@ -271,32 +274,31 @@ def decide(input_file, countries_file):
                 home_region = (test_return[i]['home']['region'])
                 home_city = (test_return[i]['home']['city'])
                 if birth_date == "" and cnt_flag != 'R':
-                    print('1-', cnt_flag)
                     cnt_flag = 'R'
-                print('1-', cnt_flag)
                 if passport == "" and cnt_flag != 'R':
                     cnt_flag = 'R'
-                    print('2-', cnt_flag)
-                print('2-', cnt_flag)
 
                 # Checking format of passport
                 valid_passport_format(passport)
                 if valid_passport_format_flag == False and cnt_flag != 'R':
                     cnt_flag = 'R'
-                    print('3-', cnt_flag)
-                print('3-', cnt_flag)
+
+                # Checking if all fields have a value to check entry record completeness
                 if last_name == "" and cnt_flag != 'R':
                     cnt_flag = 'R'
-                    print('4-', cnt_flag)
-                print('4-', cnt_flag)
                 if first_name == "" and cnt_flag != 'R':
                     cnt_flag = 'R'
-                    print('5-', cnt_flag)
-                print('5-', cnt_flag)
                 if entry_reason == "" and cnt_flag != 'R':
                     cnt_flag = 'R'
-                    print('6-', cnt_flag)
-                print('6-', cnt_flag)
+                if from_country == "" and cnt_flag != 'R':
+                    cnt_flag = 'R'
+                if from_region == "" and cnt_flag != 'R':
+                    cnt_flag = 'R'
+                if from_city == "" and cnt_flag != 'R':
+                    cnt_flag = 'R'
+
+                # if visiting, checks existence of visa code and visa date, its formats, and
+                # whether the country they are coming from requires a valid visa
                 if entry_reason.lower() == 'visiting':
                     if 'visa_code' in (test_return[i]) and 'visa_date' in (test_return[i]):
                         visa_code = (test_return[i]['visa_code'])
@@ -306,75 +308,46 @@ def decide(input_file, countries_file):
                             valid_visa_format(visa_code)
                             if valid_visa_format_flag == False and cnt_flag != 'R':
                                 cnt_flag = 'R'
-                                print('7-', cnt_flag)
-                            print('7-', cnt_flag)
                             valid_date_format(visa_date)
                             if valid_date_format_flag == False and cnt_flag != 'R':
                                 cnt_flag = 'R'
-                                print('8-', cnt_flag)
                             else:
                                 is_more_than_x_years_ago(2,visa_date)
                                 if x_years_flag == False and cnt_flag != 'R':
                                     cnt_flag = 'R'
-                                    print('9-', cnt_flag)
-                                print('9-', cnt_flag)
-                            print('8-', cnt_flag)
                     else:
                         cnt_flag = 'R'
-                        print('10-', cnt_flag)
-                    print('10-', cnt_flag)
-                if from_country == "" and cnt_flag != 'R':
-                    cnt_flag = 'R'
-                    print('11-', cnt_flag)
-                print('11-', cnt_flag)
-                if from_region == "" and cnt_flag != 'R':
-                    cnt_flag = 'R'
-                    print('12-', cnt_flag)
-                print('12-', cnt_flag)
-                if from_city == "" and cnt_flag != 'R':
-                    cnt_flag = 'R'
-                    print('13-', cnt_flag)
-                print('13-', cnt_flag)
 
                 # Decision for Question 2
                 location_check1(from_country, COUNTRIES)
                 if location_check_flag == 'R' and cnt_flag != 'R':
                     cnt_flag = 'R'
-                    print('14-',cnt_flag)
-                print('14-',cnt_flag)
 
                 # Decision for Question 5
                 medical_advisory_check1(from_country, COUNTRIES)
                 if medical_advisory_check_flag == 'Q' and cnt_flag != 'R':
                     cnt_flag = 'Q'
-                    print('15-', cnt_flag)
-                print('15-', cnt_flag)
                 if home_country == "" and cnt_flag != 'R':
                     cnt_flag = 'R'
-                    print('16-', cnt_flag)
-                print('16-', cnt_flag)
                 if home_region == "" and cnt_flag != 'R':
                     cnt_flag = 'R'
-                    print('17-', cnt_flag)
-                print('17-', cnt_flag)
                 if home_city == "" and cnt_flag != 'R':
                     cnt_flag = 'R'
-                    print('18-', cnt_flag)
-                print('18-', cnt_flag)
 
                 # Decision for Question 3
-                if home_country.upper() == 'KAN' and cnt_flag == 'F':
+                if home_country.upper() == 'KAN' and cnt_flag != 'R' and cnt_flag != 'Q':
                     cnt_flag = 'A'
-                    print('19-', cnt_flag)
-                print('19-', cnt_flag)
 
-            # If any of the above checks return 'Reject' the entry record will be rejected
+            # If any of the above checks return 'R' the traveller will be rejected
             if cnt_flag == 'R':
                 list.append("Reject")
+            # If any of the above checks return 'Q' the traveller will be sent to quarantine
             elif cnt_flag == 'Q':
                 list.append("Quarantine")
+            # If any of the above check return neither 'R' or 'Q', traveller will be accepted
             else:
                 list.append("Accept")
             i += 1
             continue 
+        # Returns a list of decisions made for each entry record
         return list
