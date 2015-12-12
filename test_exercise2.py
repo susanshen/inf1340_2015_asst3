@@ -37,12 +37,28 @@ def test_case_sensitivity():
         ["Accept", "Accept", "Quarantine"]
 
 
-def test_entry_record_completeness():
+#def test_entry_record_completeness():
+#    """
+#    Traveller's entry record completeness is checked when they are returning or visiting a country.
+#    """
+#    assert decide("test_entry_record_completeness.json", "countries.json") ==\
+#        ["Reject", "Accept", "Reject"]
+
+
+def test_number_of_records_1():
     """
-    Traveller's entry record completeness is checked when they are returning or visiting a country.
+    A JSON input file has more than 3 entry records.
     """
-    assert decide("test_entry_record_completeness.json", "countries.json") ==\
-        ["Reject", "Accept", "Reject"]
+    assert decide("test_number_of_records.json", "countries.json") ==\
+        ["Reject", "Accept", "Reject", "Accept"]
+
+
+def test_number_of_records_2():
+    """
+    A JSON input file has less than 3 entry records.
+    """
+    assert decide("test_number_of_records_2.json", "countries.json") ==\
+        ["Reject", "Accept"]
 
 
 def test_location_existence():

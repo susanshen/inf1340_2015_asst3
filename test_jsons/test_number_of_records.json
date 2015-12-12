@@ -20,7 +20,7 @@
     "passport": "JMZ0S-89IA9-OTCLY-MQILJ-P7CTY",
     "first_name": "ELIZABETH",
     "last_name": "WENDT",
-
+    "birth_date": "1958-08-22",
     "visa_code": "1u34j-1l3f5",
     "visa_date": "2015-09-09",
     "home": {
@@ -51,6 +51,23 @@
       "city": "a",
       "region": "a",
       "country": "LUG"
+    }
+  },
+  {
+    "passport": "96HIS-N5O9P-S7FO9-1JGF1-HSU5O",
+    "first_name": "JOHN",
+    "last_name": "ROBERTS",
+    "birth_date": "1936-03-25",
+    "home": {
+      "city": "Eureka",
+      "region": "NU",
+      "country": "KAN"
+    },
+    "entry_reason": "returning",
+    "from": {
+      "city": "a",
+      "region": "a",
+      "country": "CFR"
     }
   }
 ]
