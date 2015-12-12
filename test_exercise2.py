@@ -2,8 +2,8 @@
 
 """ Module to test papers.py  """
 
-__author__ = 'Susan Sim'
-__email__ = "ses@drsusansim.org"
+__author__ = 'Deanna Wong, Alyha Shahrukh & Susan Shen'
+__email__ = "deanna.wong@mail.utoronto.ca, alyha.shahrukh@mail.utoronto.ca & shuyun.shen@mail.utoronto.ca"
 
 __copyright__ = "2014 Susan Sim"
 __license__ = "MIT License"
