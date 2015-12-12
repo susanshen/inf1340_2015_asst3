@@ -4,16 +4,18 @@
     "first_name": "ELIZABETH",
     "last_name": "WENDT",
     "birth_date": "1958-08-22",
+    "visa_code": "",
+    "visa_date": "",
     "home": {
       "city": "Bala",
       "region": "ON",
-      "country": "kan"
+      "country": "ELE"
     },
-    "entry_reason": "returning",
+    "entry_reason": "visiting",
     "from": {
       "city": "Weasel",
       "region": "Rodent",
-      "country": "brd"
+      "country": "ELE"
     }
   },
   {

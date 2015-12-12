@@ -2,8 +2,8 @@
 
 """ Module to test papers.py  """
 
-__author__ = 'Susan Sim'
-__email__ = "ses@drsusansim.org"
+__author__ = 'Deanna Wong, Alyha Shahrukh & Susan Shen'
+__email__ = "deanna.wong@mail.utoronto.ca, alyha.shahrukh@mail.utoronto.ca & shuyun.shen@mail.utoronto.ca"
 
 __copyright__ = "2014 Susan Sim"
 __license__ = "MIT License"
@@ -21,46 +21,79 @@ DIR = "test_jsons/"
 os.chdir(DIR)
 
 
-#def test_returning():
-#    """
-#    Travellers are returning to KAN.
-#    """
-#    assert decide("test_returning_citizen.json", "countries.json") ==\
-#        ["Accept", "Accept", "Quarantine"]
+def test_returning():
+    """
+    Travellers are returning to KAN.
+    """
+    assert decide("test_returning_citizen.json", "countries.json") ==\
+        ["Accept", "Accept", "Quarantine"]
 
 
-#def test_entry_record_completeness():
-#    """
-#    Traveller's entry record has incomplete required information
-#    """
-#    assert decide("test_returning_citizen_2.json", "countries.json") ==\
-#        ["Reject", "Accept", "Quarantine"]
+def test_case_sensitivity():
+    """
+    Travellers are returning to KAN. Country code and passport number correctness is checked.
+    """
+    assert decide("test_returning_citizen_2.json", "countries.json") ==\
+        ["Accept", "Accept", "Quarantine"]
+
+
+def test_entry_record_completeness():
+    """
+    Traveller's entry record completeness is checked when they are returning or visiting a country.
+    """
+    assert decide("test_entry_record_completeness.json", "countries.json") ==\
+        ["Reject", "Reject", "Reject"]
+
+
+def test_number_of_records_1():
+    """
+    A JSON input file has more than 3 entry records.
+    """
+    assert decide("test_number_of_records.json", "countries.json") ==\
+        ["Reject", "Accept", "Reject", "Accept"]
+
+
+def test_number_of_records_2():
+    """
+    A JSON input file has less than 3 entry records.
+    """
+    assert decide("test_number_of_records_2.json", "countries.json") ==\
+        ["Reject", "Accept"]
 
 
 def test_location_existence():
     """
-    Location mentioned in entry record is unknown
+    Traveller's home country and the country the traveller came from is checked to see if the country exists
+    when they are returning or visiting a country.
     """
-    assert decide("test_returning_citizen_3.json", "countries.json") ==\
+    assert decide("test_location_existence.json", "countries.json") ==\
         ["Accept", "Accept", "Reject"]
 
 
 def test_visa_existence():
     """
-   Reason for entry is to visit and the visitor has a passport from a country from which a visitor visa is required.
-   But the traveller does not have a visa.
+   When reason for entry is to visit and the visitor has a passport from a country from which a visitor
+   visa is required, it is required to check if traveller has a visa or not.
     """
-    assert decide("test_returning_citizen_4.json", "countries.json") ==\
-        ["Reject", "Accept", "Quarantine"]
+    assert decide("test_visa_existence.json", "countries.json") ==\
+        ["Accept", "Reject", "Quarantine"]
 
 
 def test_visa_validation():
     """
-   Reason for entry is to visit and the visitor has a passport from a country from which a visitor visa is required.
-   And the traveller has a valid visa.
+    When reason for entry is to visit, the visitor has a passport from a country from which a visitor visa is required,
+    and visitor has a visa, it is required to check if the visa is valid or not.
     """
-    assert decide("test_returning_citizen_5.json", "countries.json") ==\
-        ["Accept", "Accept", "Quarantine"]
+    assert decide("test_visa_validation.json", "countries.json") ==\
+        ["Reject", "Accept", "Reject"]
+
+
+def test_medical_advisory_check():
+    """
+    Traveller is coming from or travelling through a country with a medical advisory.
+    """
+    assert decide("test_medical_advisory_check.json", "countries.json") ==\
+        ["Quarantine", "Accept", "Quarantine"]
 
 
 def test_valid_visa_format():
