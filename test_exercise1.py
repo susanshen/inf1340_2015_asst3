@@ -35,6 +35,7 @@ R2 = [["Department", "Head"],
 
 R = [["A", "B", "C"], [1, 2, 3], [4, 5, 6]]
 
+#WRONG_EMPLOYEES = [[]]
 #####################
 # HELPER FUNCTIONS ##
 #####################
@@ -44,7 +45,6 @@ def is_equal(t1, t2):
     t2.sort()
 
     return t1 == t2
-
 
 #####################
 # FILTER FUNCTIONS ##
@@ -69,6 +69,13 @@ def filter_r(row):
     """
     return row[-1] > 3
 
+def wrong_filter_employees(row):
+    """
+    conditions do not satisfy parameter on list
+    return: False
+    """
+    return row[-2] <=20
+
 ###################
 # TEST FUNCTIONS ##
 ###################
@@ -83,6 +90,7 @@ def test_selection():
 
     assert is_equal(result, selection(EMPLOYEES, filter_employees))
 
+def test_selection2():
     result = [["A", "B", "C"], [4, 5, 6]]
 
     assert is_equal (result, selection(R, filter_r))
@@ -99,6 +107,7 @@ def test_projection():
 
     assert is_equal(result, projection(EMPLOYEES, ["Surname", "FirstName"]))
 
+def test_projection2():
     result = [["Age"],
               [25],
               [40],
@@ -122,8 +131,21 @@ def test_cross_product():
     assert is_equal(result, cross_product(R1, R2))
 
 
+#Error test cases
 
+def selection_error():
+    """
+    test if wrong parameters for list
+    """
+    assert wrong_filter_employees() == True
 
+def projection_error():
+    """
+    tests attributes not found on list
+    """
+    assert projection(EMPLOYEES,["Hello"]) == False
+
+#def cross_product_error():
 
 
 
