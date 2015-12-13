@@ -79,7 +79,8 @@ def selection(t, f):
         if f(row) is True:
             selection_table.append(row)
         else:
-            continue
+            print "None"
+            break
 
     return selection_table
 
@@ -99,6 +100,7 @@ def projection(t, r):
 
     projection_table = []
     location = []
+    #find index location for attributes
     for item in range(len(r)):
         search = r[item]
         for i in range(len(t[0])):
@@ -108,6 +110,7 @@ def projection(t, r):
     if len(location) == 0:
         raise UnknownAttributeException
 
+    #based on indexes of attributes create new array for each line on table
     for i in range(len(t)):
         individual_lines = []
         line = t[i]
@@ -147,7 +150,8 @@ def cross_product(t1, t2):
                 combined_table = list1 + list2
                 cross_table.append(combined_table)
             else:
-                continue
+                print "None"
+                break
     #inserts heading back to new table
     cross_table.insert(0,column_titles)
 
