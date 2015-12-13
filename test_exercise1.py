@@ -6,12 +6,12 @@ Test module for exercise3.py
 
 """
 
-__author__ = 'Susan Sim'
-__email__ = "ses@drsusansim.org"
+__author__ = 'Deanna Wong, Alyha Shahrukh & Susan Shen'
+__email__ = "deanna.wong@mail.utoronto.ca, alyha.shahrukh@mail.utoronto.ca & shuyun.shen@mail.utoronto.ca"
 __copyright__ = "2015 Susan Sim"
 __license__ = "MIT License"
 
-from exercise1 import selection, projection, cross_product
+from exercise1 import selection, projection, cross_product, UnknownAttributeException
 
 
 ###########
@@ -33,6 +33,7 @@ R2 = [["Department", "Head"],
       ["production", "Mori"],
       ["sales", "Brown"]]
 
+R = [["A", "B", "C"], [1, 2, 3], [4, 5, 6]]
 
 #####################
 # HELPER FUNCTIONS ##
@@ -59,6 +60,14 @@ def filter_employees(row):
     """
     return row[-2] >= 30 and row[-1] > 3500
 
+def filter_r(row):
+    """
+    the last element in the row is greater than 3 for table R
+    :param row: A List in the format:
+        [{A}, {B}, {C}]
+    :return: True if the row satisfies the condition.
+    """
+    return row[-1] > 3
 
 ###################
 # TEST FUNCTIONS ##
@@ -74,6 +83,9 @@ def test_selection():
 
     assert is_equal(result, selection(EMPLOYEES, filter_employees))
 
+    result = [["A", "B", "C"], [4, 5, 6]]
+
+    assert is_equal (result, selection(R, filter_r))
 
 def test_projection():
     """
@@ -87,6 +99,13 @@ def test_projection():
 
     assert is_equal(result, projection(EMPLOYEES, ["Surname", "FirstName"]))
 
+    result = [["Age"],
+              [25],
+              [40],
+              [36],
+              [40]]
+
+    assert is_equal(result, projection(EMPLOYEES, ["Age"]))
 
 def test_cross_product():
     """
