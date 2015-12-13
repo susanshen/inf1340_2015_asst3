@@ -5,8 +5,8 @@
 This module performs table operations on database tables
 implemented as lists of lists. """
 
-__author__ = 'Susan Sim'
-__email__ = "ses@drsusansim.org"
+__author__ = 'Deanna Wong, Alyha Shahrukh & Susan Shen'
+__email__ = "deanna.wong@mail.utoronto.ca, alyha.shahrukh@mail.utoronto.ca & shuyun.shen@mail.utoronto.ca"
 __copyright__ = "2015 Susan Sim"
 __license__ = "MIT License"
 
@@ -46,7 +46,6 @@ def remove_duplicates(l):
 
     return result
 
-
 class UnknownAttributeException(Exception):
     """
     Raised when attempting set operations on a table
@@ -65,7 +64,7 @@ def selection(t, f):
 
     Example:
     > R = [["A", "B", "C"], [1, 2, 3], [4, 5, 6]]
-    ># Define function f that returns True iff
+    ># Define function f that returns True if
     > # the last element in the row is greater than 3.
     > def f(row): row[-1] > 3
     > select(R, f)
@@ -76,11 +75,11 @@ def selection(t, f):
     selection_table = []
 
     for row in t:
-	    #check if row on table satisfy function and add to created table
-	    if f(row) is True:
-	        selection_table.append(row)
-            else:
-                continue
+    #check if row on table satisfies function and add to created table
+        if f(row) is True:
+            selection_table.append(row)
+        else:
+            continue
 
     return selection_table
 
@@ -98,7 +97,29 @@ def projection(t, r):
 
     """
 
-    return []
+    projection_table = []
+    location = []
+    for item in range(len(r)):
+        search = r[item]
+        for i in range(len(t[0])):
+            title = t[0][i]
+            if search == title:
+                location.append(i)
+    if len(location) == 0:
+        raise UnknownAttributeException
+
+    for i in range(len(t)):
+        individual_lines = []
+        line = t[i]
+        for j in range(len(location)):
+            index_loc = location[j]
+            info_to_pull = line[index_loc]
+            individual_lines.append(info_to_pull)
+        projection_table.append(individual_lines)
+
+    return projection_table
+
+#projection (EMPLOYEES, ["Surname","FirstName"])
 
 
 def cross_product(t1, t2):
@@ -114,7 +135,7 @@ def cross_product(t1, t2):
     #combine table headings
     column_titles = t1[0] + t2[0]
     cross_table = []
-    count = 0
+
     #remove headings from tables
     del t1[0]
     del t2[0]
