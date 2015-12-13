@@ -80,7 +80,7 @@ def selection(t, f):
             selection_table.append(row)
         else:
             print "None"
-            break
+            continue
 
     return selection_table
 
