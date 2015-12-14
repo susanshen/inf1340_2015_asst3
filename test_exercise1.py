@@ -40,6 +40,8 @@ R_empty = []
 #####################
 # HELPER FUNCTIONS ##
 #####################
+
+
 def is_equal(t1, t2):
 
     t1.sort()
@@ -50,6 +52,8 @@ def is_equal(t1, t2):
 #####################
 # FILTER FUNCTIONS ##
 #####################
+
+
 def filter_employees(row):
     """
     Check if employee represented by row
@@ -61,6 +65,7 @@ def filter_employees(row):
     """
     return row[-2] >= 30 and row[-1] > 3500
 
+
 def filter_r(row):
     """
     the last element in the row is greater than 3 for table R
@@ -70,16 +75,18 @@ def filter_r(row):
     """
     return row[-1] > 3
 
+
 def wrong_filter_employees(row):
     """
     conditions do not satisfy parameter on list
     return: False
     """
-    return row[-2] <=20
+    return row[-2] <= 20
 
 ###################
 # TEST FUNCTIONS ##
 ###################
+
 
 def test_selection():
     """
@@ -91,10 +98,12 @@ def test_selection():
 
     assert is_equal(result, selection(EMPLOYEES, filter_employees))
 
+
 def test_selection2():
     result = [["A", "B", "C"], [4, 5, 6]]
 
     assert is_equal (result, selection(R, filter_r))
+
 
 def test_projection():
     """
@@ -108,6 +117,7 @@ def test_projection():
 
     assert is_equal(result, projection(EMPLOYEES, ["Surname", "FirstName"]))
 
+
 def test_projection2():
     result = [["Age"],
               [25],
@@ -116,6 +126,7 @@ def test_projection2():
               [40]]
 
     assert is_equal(result, projection(EMPLOYEES, ["Age"]))
+
 
 def test_cross_product():
     """
@@ -132,7 +143,7 @@ def test_cross_product():
     assert is_equal(result, cross_product(R1, R2))
 
 
-#Error test cases
+# Error test cases
 
 def selection_error():
     """
@@ -140,11 +151,13 @@ def selection_error():
     """
     assert wrong_filter_employees() == True
 
+
 def projection_error():
     """
     tests attributes not found on list
     """
     assert projection(EMPLOYEES,["Hello"]) == False
+
 
 def cross_product_error():
     """
