@@ -46,6 +46,7 @@ def remove_duplicates(l):
 
     return result
 
+
 class UnknownAttributeException(Exception):
     """
     Raised when attempting set operations on a table
@@ -53,10 +54,12 @@ class UnknownAttributeException(Exception):
     """
     pass
 
+
 def filter_employees(row):
     return row[-2] >= 30 and row[-1] > 3500
 
 ######################
+
 
 def selection(t, f):
     """
@@ -75,7 +78,7 @@ def selection(t, f):
     selection_table = []
 
     for row in t:
-    #check if row on table satisfies function and add to created table
+        # Check if row on table satisfies function and add to created table
         if f(row) is True:
             selection_table.append(row)
         else:
@@ -84,7 +87,8 @@ def selection(t, f):
 
     return selection_table
 
-#selection (EMPLOYEES, filter_employees)
+# Selection (EMPLOYEES, filter_employees)
+
 
 def projection(t, r):
     """
@@ -100,7 +104,7 @@ def projection(t, r):
 
     projection_table = []
     location = []
-    #find index location for attributes
+    # Find index location for attributes
     for item in range(len(r)):
         search = r[item]
         for i in range(len(t[0])):
@@ -110,7 +114,7 @@ def projection(t, r):
     if len(location) == 0:
         raise UnknownAttributeException
 
-    #based on indexes of attributes create new array for each line on table
+    # Based on indexes of attributes create new array for each line on table
     for i in range(len(t)):
         individual_lines = []
         line = t[i]
@@ -122,7 +126,7 @@ def projection(t, r):
 
     return projection_table
 
-#projection (EMPLOYEES, ["Surname","FirstName"])
+# Projection (EMPLOYEES, ["Surname","FirstName"])
 
 
 def cross_product(t1, t2):
@@ -135,31 +139,31 @@ def cross_product(t1, t2):
     [["A", "B", "C", "D"], [1, 2, 5, 6], [3, 4, 5, 6]]
 
     """
-    #check if any list is empty
+    # Check if any list is empty
     if len(t1) and len(t2) == 0:
         print "None"
 
     else:
 
-        #combine table headings
+        # Combine table headings
         column_titles = t1[0] + t2[0]
         cross_table = []
 
-        #remove headings from tables
+        # Remove headings from tables
         del t1[0]
         del t2[0]
 
         for list1 in t1:
             for list2 in t2:
                 if list2 not in list1:
-                #combines tables into new table (without headings)
+                    # Combines tables into new table (without headings)
                     combined_table = list1 + list2
                     cross_table.append(combined_table)
 
-        #inserts heading back to new table
+        # Inserts heading back to new table
         cross_table.insert(0,column_titles)
 
         return cross_table
 
-#cross_product(R1,R2)
+
 
