@@ -22,7 +22,6 @@ from collections import Counter, defaultdict
 REQUIRED_FIELDS = ["passport", "first_name", "last_name",
                    "birth_date", "home", "entry_reason", "from"]
 
-
 ######################
 #  global variables ##
 ######################
@@ -39,7 +38,6 @@ COUNTRIES = None
 #####################
 # HELPER FUNCTIONS ##
 #####################
-
 
 def is_more_than_x_years_ago(x, date_string):
     """

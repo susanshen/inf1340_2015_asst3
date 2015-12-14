@@ -148,7 +148,7 @@ def projection_error():
 
 def cross_product_error():
     """
-    test when a list is empty
+    tests when a list is empty
     """
     assert cross_product(R1,R_empty) == True
 
