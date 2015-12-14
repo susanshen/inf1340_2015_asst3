@@ -135,27 +135,31 @@ def cross_product(t1, t2):
     [["A", "B", "C", "D"], [1, 2, 5, 6], [3, 4, 5, 6]]
 
     """
-    #combine table headings
-    column_titles = t1[0] + t2[0]
-    cross_table = []
+    #check if any list is empty
+    if len(t1) and len(t2) == 0:
+        print "None"
 
-    #remove headings from tables
-    del t1[0]
-    del t2[0]
+    else:
 
-    for list1 in t1:
-        for list2 in t2:
-            if list2 not in list1:
-            #combines tables into new table (without headings)
-                combined_table = list1 + list2
-                cross_table.append(combined_table)
-            else:
-                print "None"
-                break
-    #inserts heading back to new table
-    cross_table.insert(0,column_titles)
+        #combine table headings
+        column_titles = t1[0] + t2[0]
+        cross_table = []
 
-    return cross_table
+        #remove headings from tables
+        del t1[0]
+        del t2[0]
+
+        for list1 in t1:
+            for list2 in t2:
+                if list2 not in list1:
+                #combines tables into new table (without headings)
+                    combined_table = list1 + list2
+                    cross_table.append(combined_table)
+
+        #inserts heading back to new table
+        cross_table.insert(0,column_titles)
+
+        return cross_table
 
 #cross_product(R1,R2)
 
