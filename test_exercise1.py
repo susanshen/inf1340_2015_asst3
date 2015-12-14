@@ -35,7 +35,8 @@ R2 = [["Department", "Head"],
 
 R = [["A", "B", "C"], [1, 2, 3], [4, 5, 6]]
 
-#WRONG_EMPLOYEES = [[]]
+R_empty = []
+
 #####################
 # HELPER FUNCTIONS ##
 #####################
@@ -145,7 +146,11 @@ def projection_error():
     """
     assert projection(EMPLOYEES,["Hello"]) == False
 
-#def cross_product_error():
+def cross_product_error():
+    """
+    test when a list is empty
+    """
+    assert cross_product(R1,R_empty) == True
 
 
 
