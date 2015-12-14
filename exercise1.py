@@ -78,7 +78,7 @@ def selection(t, f):
     selection_table = []
 
     for row in t:
-    # Check if row on table satisfies function and add to created table
+        # Check if row on table satisfies function and add to created table
         if f(row) is True:
             selection_table.append(row)
         else:
@@ -139,7 +139,7 @@ def cross_product(t1, t2):
     [["A", "B", "C", "D"], [1, 2, 5, 6], [3, 4, 5, 6]]
 
     """
-    #check if any list is empty
+    # Check if any list is empty
     if len(t1) and len(t2) == 0:
         print "None"
 
@@ -156,7 +156,7 @@ def cross_product(t1, t2):
         for list1 in t1:
             for list2 in t2:
                 if list2 not in list1:
-                # Combines tables into new table (without headings)
+                    # Combines tables into new table (without headings)
                     combined_table = list1 + list2
                     cross_table.append(combined_table)
 
