@@ -56,9 +56,7 @@ def is_equal(t1, t2):
 
 def filter_employees(row):
     """
-    Check if employee represented by row
-    is AT LEAST 30 years old and makes
-    MORE THAN 3500.
+    Check if employee represented by row is AT LEAST 30 years old and makes MORE THAN 3500.
     :param row: A List in the format:
         [{Surname}, {FirstName}, {Age}, {Salary}]
     :return: True if the row satisfies the condition.
@@ -68,7 +66,7 @@ def filter_employees(row):
 
 def filter_r(row):
     """
-    the last element in the row is greater than 3 for table R
+    The last element in the row is greater than 3 for table R.
     :param row: A List in the format:
         [{A}, {B}, {C}]
     :return: True if the row satisfies the condition.
@@ -78,7 +76,7 @@ def filter_r(row):
 
 def wrong_filter_employees(row):
     """
-    conditions do not satisfy parameter on list
+    Conditions do not satisfy parameter on list.
     return: False
     """
     return row[-2] <= 20
@@ -147,21 +145,21 @@ def test_cross_product():
 
 def selection_error():
     """
-    test if wrong parameters for list
+    Test if wrong parameters for list.
     """
     assert wrong_filter_employees() == True
 
 
 def projection_error():
     """
-    tests attributes not found on list
+    Tests attributes not found on list.
     """
     assert projection(EMPLOYEES,["Hello"]) == False
 
 
 def cross_product_error():
     """
-    tests when a list is empty
+    Tests when a list is empty.
     """
     assert cross_product(R1,R_empty) == True
 

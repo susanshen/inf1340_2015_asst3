@@ -49,8 +49,7 @@ def remove_duplicates(l):
 
 class UnknownAttributeException(Exception):
     """
-    Raised when attempting set operations on a table
-    that does not contain the named attribute
+    Raised when attempting set operations on a table that does not contain the named attribute
     """
     pass
 
@@ -92,8 +91,7 @@ def selection(t, f):
 
 def projection(t, r):
     """
-    Perform projection operation on table t
-    using the attributes subset r.
+    Perform projection operation on table t using the attributes subset r.
 
     Example:
     > R = [["A", "B", "C"], [1, 2, 3], [4, 5, 6]]
@@ -156,11 +154,11 @@ def cross_product(t1, t2):
         for list1 in t1:
             for list2 in t2:
                 if list2 not in list1:
-                    # Combines tables into new table (without headings)
+                    # Combine tables into new table (without headings)
                     combined_table = list1 + list2
                     cross_table.append(combined_table)
 
-        # Inserts heading back to new table
+        # Insert heading back to new table
         cross_table.insert(0,column_titles)
 
         return cross_table
